@@ -1,138 +1,120 @@
-version: '3.8'
-
 services:
-
-  # ─────────────────────────────────────────
-  # DATABASES — one per microservice (pattern enterprise!)
-  # ─────────────────────────────────────────
 
   postgres-account:
     image: postgres:15-alpine
-    container_name: finflow-postgres-account
+    container_name: denario-postgres-account
     environment:
       POSTGRES_DB: account_db
-      POSTGRES_USER: finflow
-      POSTGRES_PASSWORD: finflow_secret
+      POSTGRES_USER: denario
+      POSTGRES_PASSWORD: denario_secret
     ports:
       - "5435:5432"
     volumes:
       - postgres_account_data:/var/lib/postgresql/data
       - ./infrastructure/postgres/account-init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - finflow-network
+      - denario-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U finflow -d account_db"]
+      test: ["CMD-SHELL", "pg_isready -U denario -d account_db"]
       interval: 10s
       timeout: 5s
       retries: 5
 
   postgres-transaction:
     image: postgres:15-alpine
-    container_name: finflow-postgres-transaction
+    container_name: denario-postgres-transaction
     environment:
       POSTGRES_DB: transaction_db
-      POSTGRES_USER: finflow
-      POSTGRES_PASSWORD: finflow_secret
+      POSTGRES_USER: denario
+      POSTGRES_PASSWORD: denario_secret
     ports:
       - "5436:5432"
     volumes:
       - postgres_transaction_data:/var/lib/postgresql/data
       - ./infrastructure/postgres/transaction-init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - finflow-network
+      - denario-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U finflow -d transaction_db"]
+      test: ["CMD-SHELL", "pg_isready -U denario -d transaction_db"]
       interval: 10s
       timeout: 5s
       retries: 5
 
   postgres-notification:
     image: postgres:15-alpine
-    container_name: finflow-postgres-notification
+    container_name: denario-postgres-notification
     environment:
       POSTGRES_DB: notification_db
-      POSTGRES_USER: finflow
-      POSTGRES_PASSWORD: finflow_secret
+      POSTGRES_USER: denario
+      POSTGRES_PASSWORD: denario_secret
     ports:
       - "5437:5432"
     volumes:
       - postgres_notification_data:/var/lib/postgresql/data
     networks:
-      - finflow-network
+      - denario-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U finflow -d notification_db"]
+      test: ["CMD-SHELL", "pg_isready -U denario -d notification_db"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  # ─────────────────────────────────────────
-  # KEYCLOAK — OAuth2/OIDC Auth Server
-  # ─────────────────────────────────────────
-
   keycloak:
     image: quay.io/keycloak/keycloak:23.0
-    container_name: finflow-keycloak
+    container_name: denario-keycloak
     command: start-dev --import-realm
     environment:
       KEYCLOAK_ADMIN: admin
       KEYCLOAK_ADMIN_PASSWORD: admin
       KC_DB: postgres
       KC_DB_URL: jdbc:postgresql://postgres-keycloak:5432/keycloak_db
-      KC_DB_USERNAME: finflow
-      KC_DB_PASSWORD: finflow_secret
+      KC_DB_USERNAME: denario
+      KC_DB_PASSWORD: denario_secret
     ports:
       - "8180:8080"
     volumes:
-      - ./infrastructure/keycloak/finflow-realm.json:/opt/keycloak/data/import/finflow-realm.json
+      - ./infrastructure/keycloak/denario-realm.json:/opt/keycloak/data/import/denario-realm.json
     depends_on:
       postgres-keycloak:
         condition: service_healthy
     networks:
-      - finflow-network
+      - denario-network
 
   postgres-keycloak:
     image: postgres:15-alpine
-    container_name: finflow-postgres-keycloak
+    container_name: denario-postgres-keycloak
     environment:
       POSTGRES_DB: keycloak_db
-      POSTGRES_USER: finflow
-      POSTGRES_PASSWORD: finflow_secret
+      POSTGRES_USER: denario
+      POSTGRES_PASSWORD: denario_secret
     volumes:
       - postgres_keycloak_data:/var/lib/postgresql/data
     networks:
-      - finflow-network
+      - denario-network
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U finflow -d keycloak_db"]
+      test: ["CMD-SHELL", "pg_isready -U denario -d keycloak_db"]
       interval: 10s
       timeout: 5s
       retries: 5
 
-  # ─────────────────────────────────────────
-  # RABBITMQ — Async messaging between services
-  # ─────────────────────────────────────────
-
   rabbitmq:
     image: rabbitmq:3.12-management-alpine
-    container_name: finflow-rabbitmq
+    container_name: denario-rabbitmq
     environment:
       RABBITMQ_DEFAULT_USER: guest
       RABBITMQ_DEFAULT_PASS: guest
     ports:
-      - "5672:5672"    # AMQP protocol
-      - "15672:15672"  # Management UI
+      - "5672:5672"
+      - "15672:15672"
     volumes:
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
-      - finflow-network
+      - denario-network
     healthcheck:
       test: ["CMD", "rabbitmq-diagnostics", "ping"]
       interval: 10s
       timeout: 5s
       retries: 5
-
-# ─────────────────────────────────────────
-# VOLUMES & NETWORKS
-# ─────────────────────────────────────────
 
 volumes:
   postgres_account_data:
@@ -142,5 +124,5 @@ volumes:
   rabbitmq_data:
 
 networks:
-  finflow-network:
+  denario-network:
     driver: bridge

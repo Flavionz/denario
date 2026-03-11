@@ -1,7 +1,7 @@
 {
-  "realm": "finflow",
+  "realm": "denario",
   "enabled": true,
-  "displayName": "FinFlow Banking",
+  "displayName": "Denario Banking",
   "registrationAllowed": false,
   "loginWithEmailAllowed": true,
   "duplicateEmailsAllowed": false,
@@ -10,8 +10,8 @@
 
   "clients": [
     {
-      "clientId": "finflow-angular",
-      "name": "FinFlow Angular App",
+      "clientId": "denario-angular",
+      "name": "Denario Angular App",
       "enabled": true,
       "publicClient": true,
       "standardFlowEnabled": true,
@@ -42,7 +42,7 @@
   "users": [
     {
       "username": "user",
-      "email": "user@finflow.com",
+      "email": "user@denario.com",
       "firstName": "Mario",
       "lastName": "Rossi",
       "enabled": true,
@@ -58,9 +58,9 @@
     },
     {
       "username": "admin",
-      "email": "admin@finflow.com",
+      "email": "admin@denario.com",
       "firstName": "Admin",
-      "lastName": "FinFlow",
+      "lastName": "Denario",
       "enabled": true,
       "emailVerified": true,
       "credentials": [

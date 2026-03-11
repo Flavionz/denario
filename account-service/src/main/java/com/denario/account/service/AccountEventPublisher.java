@@ -1,6 +1,6 @@
-package com.finflow.account.service;
+package com.denario.account.service;
 
-import com.finflow.account.model.Account;
+import com.denario.account.model.Account;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;

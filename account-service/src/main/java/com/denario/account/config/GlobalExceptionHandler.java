@@ -1,6 +1,6 @@
-package com.finflow.account.config;
+package com.denario.account.config;
 
-import com.finflow.account.service.AccountService.*;
+import com.denario.account.service.AccountService.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;

@@ -1,6 +1,6 @@
-package com.finflow.account.dto;
+package com.denario.account.dto;
 
-import com.finflow.account.model.Account;
+import com.denario.account.model.Account;
 import jakarta.validation.constraints.*;
 import lombok.*;
 

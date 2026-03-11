@@ -11,7 +11,7 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.finflow</groupId>
+    <groupId>com.denario</groupId>
     <artifactId>account-service</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <name>FinFlow - Account Service</name>

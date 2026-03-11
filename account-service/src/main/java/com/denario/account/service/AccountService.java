@@ -1,8 +1,8 @@
-package com.finflow.account.service;
+package com.denario.account.service;
 
-import com.finflow.account.dto.AccountDto.*;
-import com.finflow.account.model.Account;
-import com.finflow.account.repository.AccountRepository;
+import com.denario.account.dto.AccountDto.*;
+import com.denario.account.model.Account;
+import com.denario.account.repository.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;

@@ -1,4 +1,4 @@
-package com.finflow.account.config;
+package com.denario.account.config;
 
 import org.springframework.amqp.core.*;
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;

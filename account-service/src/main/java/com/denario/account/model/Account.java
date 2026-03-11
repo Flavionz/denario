@@ -1,4 +1,4 @@
-package com.finflow.account.model;
+package com.denario.account.model;
 
 import jakarta.persistence.*;
 import lombok.*;

@@ -1,6 +1,6 @@
-package com.finflow.account.repository;
+package com.denario.account.repository;
 
-import com.finflow.account.model.Account;
+import com.denario.account.model.Account;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;

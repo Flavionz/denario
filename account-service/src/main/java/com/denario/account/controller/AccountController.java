@@ -1,7 +1,7 @@
-package com.finflow.account.controller;
+package com.denario.account.controller;
 
-import com.finflow.account.dto.AccountDto.*;
-import com.finflow.account.service.AccountService;
+import com.denario.account.dto.AccountDto.*;
+import com.denario.account.service.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

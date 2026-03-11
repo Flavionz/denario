@@ -1,0 +1,85 @@
+server:
+  port: 8082
+
+spring:
+  application:
+    name: transaction-service
+
+  datasource:
+    url: jdbc:postgresql://localhost:5433/transaction_db
+    username: finflow
+    password: finflow_secret
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+
+  jpa:
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/finflow
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
+
+logging:
+  level:
+    com.finflow: DEBUG
+
+# URL interno per chiamare account-service
+finflow:
+  services:
+    account-service-url: http://localhost:8081
+  rabbitmq:
+    exchanges:
+      transaction: transaction.exchange
+    queues:
+      transaction-created: transaction.created.queue
+    routing-keys:
+      transaction-created: transaction.created
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+  datasource:
+    url: jdbc:postgresql://postgres-transaction:5432/transaction_db
+
+  rabbitmq:
+    host: rabbitmq
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/finflow
+
+finflow:
+  services:
+    account-service-url: http://account-service:8081

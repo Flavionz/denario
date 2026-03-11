@@ -1,0 +1,34 @@
+# Maven
+target/
+*.jar
+*.war
+.mvn/wrapper/maven-wrapper.jar
+
+# Spring Boot
+*.log
+spring-shell.log
+
+# IDE
+.idea/
+*.iml
+.vscode/
+.classpath
+.project
+.settings/
+
+# Node / Angular
+node_modules/
+dist/
+.angular/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker volumes (local dev)
+postgres_data/
+
+# Secrets — NEVER commit these!
+*.env
+.env.local
+application-secrets.yml

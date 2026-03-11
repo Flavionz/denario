@@ -1,0 +1,76 @@
+{
+  "realm": "finflow",
+  "enabled": true,
+  "displayName": "FinFlow Banking",
+  "registrationAllowed": false,
+  "loginWithEmailAllowed": true,
+  "duplicateEmailsAllowed": false,
+  "resetPasswordAllowed": true,
+  "sslRequired": "none",
+
+  "clients": [
+    {
+      "clientId": "finflow-angular",
+      "name": "FinFlow Angular App",
+      "enabled": true,
+      "publicClient": true,
+      "standardFlowEnabled": true,
+      "directAccessGrantsEnabled": true,
+      "redirectUris": [
+        "http://localhost:4200/*"
+      ],
+      "webOrigins": [
+        "http://localhost:4200"
+      ],
+      "protocol": "openid-connect"
+    }
+  ],
+
+  "roles": {
+    "realm": [
+      {
+        "name": "ROLE_USER",
+        "description": "Standard bank customer"
+      },
+      {
+        "name": "ROLE_ADMIN",
+        "description": "Bank administrator"
+      }
+    ]
+  },
+
+  "users": [
+    {
+      "username": "user",
+      "email": "user@finflow.com",
+      "firstName": "Mario",
+      "lastName": "Rossi",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "password",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["ROLE_USER"]
+    },
+    {
+      "username": "admin",
+      "email": "admin@finflow.com",
+      "firstName": "Admin",
+      "lastName": "FinFlow",
+      "enabled": true,
+      "emailVerified": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "admin123",
+          "temporary": false
+        }
+      ],
+      "realmRoles": ["ROLE_USER", "ROLE_ADMIN"]
+    }
+  ]
+}

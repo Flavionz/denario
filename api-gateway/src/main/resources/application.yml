@@ -1,0 +1,128 @@
+# ══════════════════════════════════════════════════════
+# API GATEWAY — application.yml
+# Punto di ingresso unico per tutta l'app.
+# Il frontend Angular parla SOLO con il Gateway (porta 8080)
+# Il Gateway smista le richieste ai microservices giusti
+# ══════════════════════════════════════════════════════
+
+server:
+  port: 8080
+
+spring:
+  application:
+    name: api-gateway
+
+  # ── ROUTING RULES ──────────────────────────────────
+  cloud:
+    gateway:
+      # CORS globale — permettiamo ad Angular (4200) di chiamare il Gateway
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins:
+              - "http://localhost:4200"
+            allowedMethods:
+              - GET
+              - POST
+              - PUT
+              - DELETE
+              - OPTIONS
+            allowedHeaders: "*"
+            allowCredentials: true
+
+      routes:
+
+        # ── ROUTE 1: Account Service ────────────────
+        - id: account-service
+          uri: http://localhost:8081        # Dove forwarda
+          predicates:
+            - Path=/api/accounts/**        # Pattern di match
+          filters:
+            - StripPrefix=0                # Non rimuove /api dal path
+            # TokenRelay: passa il JWT originale al microservice downstream
+            - TokenRelay=
+
+        # ── ROUTE 2: Transaction Service ───────────
+        - id: transaction-service
+          uri: http://localhost:8082
+          predicates:
+            - Path=/api/transactions/**
+          filters:
+            - TokenRelay=
+
+        # ── ROUTE 3: Notification Service (REST) ───
+        - id: notification-service-rest
+          uri: http://localhost:8083
+          predicates:
+            - Path=/api/notifications/**
+          filters:
+            - TokenRelay=
+
+        # ── ROUTE 4: WebSocket (no JWT filter) ─────
+        # WebSocket usa un meccanismo di auth diverso
+        - id: notification-service-ws
+          uri: ws://localhost:8083          # ws:// non http://
+          predicates:
+            - Path=/ws/**
+
+  # ── SECURITY ─────────────────────────────────────
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8180/realms/finflow
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    gateway:
+      enabled: true  # Permette di vedere le route via /actuator/gateway/routes
+
+logging:
+  level:
+    org.springframework.cloud.gateway: DEBUG
+    com.finflow: DEBUG
+
+---
+spring:
+  config:
+    activate:
+      on-profile: docker
+
+  cloud:
+    gateway:
+      routes:
+        - id: account-service
+          uri: http://account-service:8081   # Docker service name
+          predicates:
+            - Path=/api/accounts/**
+          filters:
+            - TokenRelay=
+
+        - id: transaction-service
+          uri: http://transaction-service:8082
+          predicates:
+            - Path=/api/transactions/**
+          filters:
+            - TokenRelay=
+
+        - id: notification-service-rest
+          uri: http://notification-service:8083
+          predicates:
+            - Path=/api/notifications/**
+          filters:
+            - TokenRelay=
+
+        - id: notification-service-ws
+          uri: ws://notification-service:8083
+          predicates:
+            - Path=/ws/**
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://keycloak:8080/realms/finflow

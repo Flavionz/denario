@@ -1,21 +1,15 @@
-# ══════════════════════════════════════════════════════
-# ACCOUNT SERVICE — application.yml
-# Ogni microservice ha la sua configurazione indipendente
-# ══════════════════════════════════════════════════════
 
 server:
-  port: 8081  # Ogni service ha una porta diversa
+  port: 8081
 
 spring:
   application:
-    name: account-service  # Nome usato per il service discovery
+    name: account-service
 
-  # ── DATABASE ────────────────────────────────────────
   datasource:
-    url: jdbc:postgresql://localhost:5432/account_db
+    url: jdbc:postgresql://localhost:5435/account_db
     username: finflow
     password: finflow_secret
-    # HikariCP: connection pool enterprise (già incluso in Spring Boot)
     hikari:
       maximum-pool-size: 10
       minimum-idle: 2
@@ -23,38 +17,31 @@ spring:
 
   jpa:
     hibernate:
-      ddl-auto: validate  # NON crea tabelle da solo — Flyway se ne occupa
-    show-sql: false       # true solo in dev per debug
+      ddl-auto: validate
+    show-sql: false
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
 
-  # ── FLYWAY (DB Migrations) ───────────────────────────
   flyway:
     enabled: true
     locations: classpath:db/migration
-    # I file SQL devono essere in: src/main/resources/db/migration/
-    # Naming: V1__create_accounts_table.sql, V2__add_iban_column.sql
 
-  # ── RABBITMQ ─────────────────────────────────────────
   rabbitmq:
     host: localhost
     port: 5672
     username: guest
     password: guest
-    # In produzione queste credenziali vengono da env variables o Vault
 
-  # ── SECURITY (Keycloak as OAuth2 Resource Server) ────
   security:
     oauth2:
       resourceserver:
         jwt:
-          # Keycloak pubblica le sue chiavi pubbliche qui
-          # Il service le usa per validare i JWT SENZA chiamare Keycloak ad ogni request
+
           issuer-uri: http://localhost:8180/realms/finflow
 
-# ── MANAGEMENT (Actuator) ────────────────────────────
+
 management:
   endpoints:
     web:
@@ -64,7 +51,7 @@ management:
     health:
       show-details: always
 
-# ── LOGGING ──────────────────────────────────────────
+
 logging:
   level:
     com.finflow: DEBUG
@@ -72,7 +59,7 @@ logging:
   pattern:
     console: "%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 
-# ── APP CUSTOM CONFIG ────────────────────────────────
+
 finflow:
   rabbitmq:
     exchanges:
@@ -85,11 +72,7 @@ finflow:
       account-updated: account.updated
 
 ---
-# ══════════════════════════════════════════════════════
-# PROFILE: docker
-# Attivato con: SPRING_PROFILES_ACTIVE=docker
-# Sovrascrive solo i valori diversi dall'env Docker
-# ══════════════════════════════════════════════════════
+
 spring:
   config:
     activate:
@@ -97,7 +80,6 @@ spring:
 
   datasource:
     url: jdbc:postgresql://postgres-account:5432/account_db
-    # "postgres-account" è il nome del container in docker-compose
 
   rabbitmq:
     host: rabbitmq
@@ -107,4 +89,3 @@ spring:
       resourceserver:
         jwt:
           issuer-uri: http://keycloak:8080/realms/finflow
-          # All'interno di Docker la rete è "keycloak:8080" non "localhost:8180"

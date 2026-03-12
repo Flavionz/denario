@@ -11,54 +11,46 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.finflow</groupId>
+    <groupId>com.denario</groupId>
     <artifactId>api-gateway</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <n>FinFlow - API Gateway</n>
-    <description>Single entry point — routes requests to microservices</description>
+    <name>Denario - API Gateway</name>
+    <description>Single entry point for all Denario microservices</description>
 
     <properties>
         <java.version>21</java.version>
-        <spring-cloud.version>2023.0.0</spring-cloud.version>
+        <spring-cloud.version>2023.0.1</spring-cloud.version>
     </properties>
 
     <dependencies>
-
-        <!-- ── SPRING CLOUD GATEWAY ──────────────────── -->
-        <!-- IMPORTANTE: Gateway usa WebFlux (reattivo), NON Web MVC
-             Non aggiungere spring-boot-starter-web — conflitto! -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-gateway</artifactId>
         </dependency>
-
-        <!-- ── SECURITY ──────────────────────────────── -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
-            <!-- Il Gateway valida il token JWT prima di forwardare la request -->
         </dependency>
-
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-circuitbreaker-reactor-resilience4j</artifactId>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>
         </dependency>
-
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
             <optional>true</optional>
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
             <scope>test</scope>
         </dependency>
-
     </dependencies>
 
-    <!-- Spring Cloud BOM — gestisce le versioni di tutti i moduli Cloud -->
     <dependencyManagement>
         <dependencies>
             <dependency>
@@ -84,7 +76,7 @@
                         </exclude>
                     </excludes>
                     <image>
-                        <n>finflow/${project.artifactId}:${project.version}</n>
+                        <n>denario/${project.artifactId}:${project.version}</n>
                     </image>
                 </configuration>
             </plugin>

@@ -9,31 +9,28 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
-
 @Configuration
 public class RabbitMQConfig {
 
-    @Value("${finflow.rabbitmq.exchanges.account}")
+    @Value("${denario.rabbitmq.exchanges.account}")
     private String accountExchange;
 
-    @Value("${finflow.rabbitmq.queues.account-created}")
+    @Value("${denario.rabbitmq.queues.account-created}")
     private String accountCreatedQueue;
 
-    @Value("${finflow.rabbitmq.queues.account-updated}")
+    @Value("${denario.rabbitmq.queues.account-updated}")
     private String accountUpdatedQueue;
 
-    @Value("${finflow.rabbitmq.routing-keys.account-created}")
+    @Value("${denario.rabbitmq.routing-keys.account-created}")
     private String accountCreatedRoutingKey;
 
-    @Value("${finflow.rabbitmq.routing-keys.account-updated}")
+    @Value("${denario.rabbitmq.routing-keys.account-updated}")
     private String accountUpdatedRoutingKey;
-
 
     @Bean
     public TopicExchange accountExchange() {
         return new TopicExchange(accountExchange, true, false);
     }
-
 
     @Bean
     public Queue accountCreatedQueue() {
@@ -44,7 +41,6 @@ public class RabbitMQConfig {
     public Queue accountUpdatedQueue() {
         return QueueBuilder.durable(accountUpdatedQueue).build();
     }
-
 
     @Bean
     public Binding accountCreatedBinding() {
@@ -61,7 +57,6 @@ public class RabbitMQConfig {
                 .to(accountExchange())
                 .with(accountUpdatedRoutingKey);
     }
-
 
     @Bean
     public MessageConverter messageConverter() {

@@ -1,6 +1,7 @@
-package com.denario.account.config;
+package com.denario.transaction.config;
 
-import com.denario.account.service.AccountService.*;
+import com.denario.transaction.service.AccountServiceClient.*;
+import com.denario.transaction.service.TransactionService.*;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -18,22 +19,38 @@ import java.util.Map;
 @Slf4j
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler(AccountNotFoundException.class)
-    public ProblemDetail handleAccountNotFound(AccountNotFoundException ex) {
-        log.warn("Account not found: {}", ex.getMessage());
-        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.NOT_FOUND, ex.getMessage());
-        problem.setType(URI.create("https://denario.com/errors/account-not-found"));
-        problem.setTitle("Account Not Found");
+    @ExceptionHandler(InsufficientBalanceException.class)
+    public ProblemDetail handleInsufficientBalance(InsufficientBalanceException ex) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage());
+        problem.setType(URI.create("https://denario.com/errors/insufficient-balance"));
+        problem.setTitle("Insufficient Balance");
         problem.setProperty("timestamp", Instant.now());
         return problem;
     }
 
-    @ExceptionHandler(InsufficientBalanceException.class)
-    public ProblemDetail handleInsufficientBalance(InsufficientBalanceException ex) {
-        log.warn("Insufficient balance: {}", ex.getMessage());
-        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.UNPROCESSABLE_ENTITY, ex.getMessage());
-        problem.setType(URI.create("https://denario.com/errors/insufficient-balance"));
-        problem.setTitle("Insufficient Balance");
+    @ExceptionHandler(InvalidTransactionException.class)
+    public ProblemDetail handleInvalidTransaction(InvalidTransactionException ex) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, ex.getMessage());
+        problem.setType(URI.create("https://denario.com/errors/invalid-transaction"));
+        problem.setTitle("Invalid Transaction");
+        problem.setProperty("timestamp", Instant.now());
+        return problem;
+    }
+
+    @ExceptionHandler(TransactionFailedException.class)
+    public ProblemDetail handleTransactionFailed(TransactionFailedException ex) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, ex.getMessage());
+        problem.setType(URI.create("https://denario.com/errors/transaction-failed"));
+        problem.setTitle("Transaction Failed");
+        problem.setProperty("timestamp", Instant.now());
+        return problem;
+    }
+
+    @ExceptionHandler(AccountServiceException.class)
+    public ProblemDetail handleAccountServiceError(AccountServiceException ex) {
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.SERVICE_UNAVAILABLE, ex.getMessage());
+        problem.setType(URI.create("https://denario.com/errors/account-service-unavailable"));
+        problem.setTitle("Account Service Unavailable");
         problem.setProperty("timestamp", Instant.now());
         return problem;
     }
@@ -45,8 +62,7 @@ public class GlobalExceptionHandler {
             String fieldName = ((FieldError) error).getField();
             fieldErrors.put(fieldName, error.getDefaultMessage());
         });
-        log.warn("Validation failed: {}", fieldErrors);
-        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Request validation failed");
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.BAD_REQUEST, "Validation failed");
         problem.setType(URI.create("https://denario.com/errors/validation-failed"));
         problem.setTitle("Validation Failed");
         problem.setProperty("errors", fieldErrors);
@@ -57,7 +73,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(Exception.class)
     public ProblemDetail handleGenericException(Exception ex) {
         log.error("Unexpected error: {}", ex.getMessage(), ex);
-        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred. Please try again later.");
+        ProblemDetail problem = ProblemDetail.forStatusAndDetail(HttpStatus.INTERNAL_SERVER_ERROR, "An unexpected error occurred");
         problem.setType(URI.create("https://denario.com/errors/internal-error"));
         problem.setTitle("Internal Server Error");
         problem.setProperty("timestamp", Instant.now());

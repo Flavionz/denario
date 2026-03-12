@@ -14,7 +14,7 @@
     <groupId>com.denario</groupId>
     <artifactId>account-service</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <name>FinFlow - Account Service</name>
+    <name>Denario - Account Service</name>
     <description>Manages bank accounts and balances</description>
 
     <properties>

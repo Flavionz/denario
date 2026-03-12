@@ -1,6 +1,7 @@
 package com.denario.account.controller;
 
 import com.denario.account.dto.AccountDto.*;
+import com.denario.account.dto.UpdateBalanceRequest;
 import com.denario.account.service.AccountService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -15,7 +16,6 @@ import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
 
-
 @RestController
 @RequestMapping("/api/accounts")
 @RequiredArgsConstructor
@@ -28,40 +28,37 @@ public class AccountController {
     public ResponseEntity<List<AccountSummary>> getMyAccounts(
             @AuthenticationPrincipal Jwt jwt) {
 
-        String userId = jwt.getSubject();
-        List<AccountSummary> accounts = accountService.getMyAccounts(userId);
-        return ResponseEntity.ok(accounts);
+        return ResponseEntity.ok(accountService.getMyAccounts(jwt.getSubject()));
     }
-
 
     @GetMapping("/{id}")
     public ResponseEntity<AccountResponse> getAccountById(
             @PathVariable UUID id,
             @AuthenticationPrincipal Jwt jwt) {
 
-        String userId = jwt.getSubject();
-        AccountResponse account = accountService.getAccountById(id, userId);
-        return ResponseEntity.ok(account);
+        return ResponseEntity.ok(accountService.getAccountById(id, jwt.getSubject()));
     }
-
 
     @PostMapping
     public ResponseEntity<AccountResponse> createAccount(
             @Valid @RequestBody CreateAccountRequest request,
             @AuthenticationPrincipal Jwt jwt) {
 
-        String userId = jwt.getSubject();
-        AccountResponse created = accountService.createAccount(request, userId);
-        return ResponseEntity.status(HttpStatus.CREATED).body(created);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body(accountService.createAccount(request, jwt.getSubject()));
     }
-
 
     @GetMapping("/balance")
     public ResponseEntity<BalanceResponse> checkBalance(
             @RequestParam String iban,
             @RequestParam(defaultValue = "0") BigDecimal amount) {
 
-        BalanceResponse balance = accountService.checkBalance(iban, amount);
-        return ResponseEntity.ok(balance);
+        return ResponseEntity.ok(accountService.checkBalance(iban, amount));
+    }
+
+    @PatchMapping("/balance")
+    public ResponseEntity<Void> updateBalance(@RequestBody UpdateBalanceRequest request) {
+        accountService.updateBalance(request.getIban(), request.getAmount());
+        return ResponseEntity.noContent().build();
     }
 }

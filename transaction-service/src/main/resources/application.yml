@@ -6,9 +6,9 @@ spring:
     name: transaction-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/transaction_db
-    username: finflow
-    password: finflow_secret
+    url: jdbc:postgresql://localhost:5436/transaction_db
+    username: denario
+    password: denario_secret
     hikari:
       maximum-pool-size: 10
       minimum-idle: 2
@@ -35,7 +35,7 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8180/realms/finflow
+          issuer-uri: http://localhost:8180/realms/denario
 
 management:
   endpoints:
@@ -48,10 +48,9 @@ management:
 
 logging:
   level:
-    com.finflow: DEBUG
+    com.denario: DEBUG
 
-# URL interno per chiamare account-service
-finflow:
+denario:
   services:
     account-service-url: http://localhost:8081
   rabbitmq:
@@ -78,8 +77,8 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://keycloak:8080/realms/finflow
+          issuer-uri: http://keycloak:8080/realms/denario
 
-finflow:
+denario:
   services:
     account-service-url: http://account-service:8081

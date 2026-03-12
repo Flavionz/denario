@@ -8,8 +8,8 @@ spring:
 
   datasource:
     url: jdbc:postgresql://localhost:5435/account_db
-    username: finflow
-    password: finflow_secret
+    username: denario
+    password: denario_secret
     hikari:
       maximum-pool-size: 10
       minimum-idle: 2
@@ -39,7 +39,7 @@ spring:
       resourceserver:
         jwt:
 
-          issuer-uri: http://localhost:8180/realms/finflow
+          issuer-uri: http://localhost:8180/realms/denario
 
 
 management:
@@ -54,13 +54,13 @@ management:
 
 logging:
   level:
-    com.finflow: DEBUG
+    com.denario: DEBUG
     org.springframework.security: INFO
   pattern:
     console: "%d{HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
 
 
-finflow:
+denario:
   rabbitmq:
     exchanges:
       account: account.exchange
@@ -88,4 +88,4 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://keycloak:8080/realms/finflow
+          issuer-uri: http://keycloak:8080/realms/denario

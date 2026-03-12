@@ -6,14 +6,20 @@ spring:
     name: notification-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5434/notification_db
-    username: finflow
-    password: finflow_secret
+    url: jdbc:postgresql://localhost:5437/notification_db
+    username: denario
+    password: denario_secret
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
 
   jpa:
     hibernate:
       ddl-auto: validate
     show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
 
   flyway:
     enabled: true
@@ -29,23 +35,26 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://localhost:8180/realms/finflow
+          issuer-uri: http://localhost:8180/realms/denario
 
 management:
   endpoints:
     web:
       exposure:
-        include: health,info
+        include: health,info,metrics
+  endpoint:
+    health:
+      show-details: always
 
 logging:
   level:
-    com.finflow: DEBUG
+    com.denario: DEBUG
 
-finflow:
+denario:
   rabbitmq:
     queues:
+      account-created: account.created.queue
       transaction-created: transaction.created.queue
-      # Ascolta gli eventi pubblicati da transaction-service
 
 ---
 spring:
@@ -63,4 +72,4 @@ spring:
     oauth2:
       resourceserver:
         jwt:
-          issuer-uri: http://keycloak:8080/realms/finflow
+          issuer-uri: http://keycloak:8080/realms/denario

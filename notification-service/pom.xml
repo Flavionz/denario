@@ -11,11 +11,11 @@
         <relativePath/>
     </parent>
 
-    <groupId>com.finflow</groupId>
+    <groupId>com.denario</groupId>
     <artifactId>notification-service</artifactId>
     <version>1.0.0-SNAPSHOT</version>
-    <n>FinFlow - Notification Service</n>
-    <description>Real-time notifications via WebSocket (STOMP)</description>
+    <name>Denario - Notification Service</name>
+    <description>Real-time notifications via WebSocket and STOMP</description>
 
     <properties>
         <java.version>21</java.version>
@@ -26,15 +26,10 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
-
-        <!-- ── WEBSOCKET (STOMP over SockJS) ──────────── -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-websocket</artifactId>
-            <!-- STOMP è il protocollo di messaggistica sopra WebSocket
-                 SockJS è il fallback per browser che non supportano WS -->
         </dependency>
-
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-oauth2-resource-server</artifactId>
@@ -59,6 +54,7 @@
         <dependency>
             <groupId>org.flywaydb</groupId>
             <artifactId>flyway-database-postgresql</artifactId>
+            <version>10.10.0</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -89,7 +85,7 @@
                         </exclude>
                     </excludes>
                     <image>
-                        <n>finflow/${project.artifactId}:${project.version}</n>
+                        <name>denario/${project.artifactId}:${project.version}</name>
                     </image>
                 </configuration>
             </plugin>

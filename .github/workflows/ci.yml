@@ -43,6 +43,7 @@ jobs:
           chmod +x account-service/mvnw
           chmod +x transaction-service/mvnw
           chmod +x notification-service/mvnw
+          chmod +x api-gateway/mvnw
 
       - name: Test Account Service
         run: |
@@ -64,6 +65,7 @@ jobs:
           cd account-service && ./mvnw package -DskipTests
           cd ../transaction-service && ./mvnw package -DskipTests
           cd ../notification-service && ./mvnw package -DskipTests
+          cd ../api-gateway && ./mvnw package -DskipTests
 
       - name: Upload test reports
         uses: actions/upload-artifact@v4
@@ -96,10 +98,11 @@ jobs:
           chmod +x account-service/mvnw
           chmod +x transaction-service/mvnw
           chmod +x notification-service/mvnw
+          chmod +x api-gateway/mvnw
 
       - name: Verify all modules compile
         run: |
-          for service in account-service transaction-service notification-service; do
+          for service in account-service transaction-service notification-service api-gateway; do
             echo "Verifying $service..."
             cd $service && ./mvnw verify -DskipTests && cd ..
           done

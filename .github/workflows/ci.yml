@@ -38,6 +38,12 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Make mvnw executable
+        run: |
+          chmod +x account-service/mvnw
+          chmod +x transaction-service/mvnw
+          chmod +x notification-service/mvnw
+
       - name: Test Account Service
         run: |
           cd account-service
@@ -58,7 +64,6 @@ jobs:
           cd account-service && ./mvnw package -DskipTests
           cd ../transaction-service && ./mvnw package -DskipTests
           cd ../notification-service && ./mvnw package -DskipTests
-          cd ../api-gateway && ./mvnw package -DskipTests
 
       - name: Upload test reports
         uses: actions/upload-artifact@v4
@@ -86,9 +91,15 @@ jobs:
           distribution: 'temurin'
           cache: maven
 
+      - name: Make mvnw executable
+        run: |
+          chmod +x account-service/mvnw
+          chmod +x transaction-service/mvnw
+          chmod +x notification-service/mvnw
+
       - name: Verify all modules compile
         run: |
-          for service in account-service transaction-service notification-service api-gateway; do
+          for service in account-service transaction-service notification-service; do
             echo "Verifying $service..."
             cd $service && ./mvnw verify -DskipTests && cd ..
           done

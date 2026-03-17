@@ -1,0 +1,155 @@
+<div class="dashboard fade-in-up">
+  <!-- Hero card: Total balance -->
+  <div class="hero-card glass-card">
+    <!-- Watermark coin -->
+    <img src="assets/images/denarius-coin.svg" alt="" class="hero-watermark" aria-hidden="true" />
+
+    <div class="hero-content">
+      <div class="hero-label">Total Balance</div>
+      @if (loadingAccounts()) {
+        <mat-spinner diameter="40" />
+      } @else {
+        <div class="hero-balance">
+          {{ totalBalance() | currency:'EUR':'symbol':'1.2-2' }}
+        </div>
+      }
+      <div class="hero-sub">Across {{ totalAccountsCount() }} account{{ totalAccountsCount() !== 1 ? 's' : '' }}</div>
+    </div>
+  </div>
+
+  <!-- Quick stats row -->
+  <div class="stats-row">
+    <div class="stat-card glass-card">
+      <mat-icon class="stat-icon">account_balance</mat-icon>
+      <div class="stat-body">
+        <div class="stat-value">{{ totalAccountsCount() }}</div>
+        <div class="stat-label">Accounts</div>
+      </div>
+    </div>
+
+    <div class="stat-card glass-card">
+      <mat-icon class="stat-icon">swap_horiz</mat-icon>
+      <div class="stat-body">
+        <div class="stat-value">{{ recentTransactions().length }}</div>
+        <div class="stat-label">Recent Transactions</div>
+      </div>
+    </div>
+
+    <div class="stat-card glass-card">
+      <mat-icon class="stat-icon">schedule</mat-icon>
+      <div class="stat-body">
+        @if (lastActivity()) {
+          <div class="stat-value stat-date">{{ lastActivity() | date:'MMM d' }}</div>
+        } @else {
+          <div class="stat-value">—</div>
+        }
+        <div class="stat-label">Last Activity</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Accounts grid -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">My Accounts</h2>
+      <a routerLink="/accounts" class="section-link">View all</a>
+    </div>
+
+    @if (loadingAccounts()) {
+      <div class="loading-placeholder">
+        <mat-spinner diameter="32" />
+      </div>
+    } @else if (accounts().length === 0) {
+      <div class="empty-section">
+        <mat-icon>account_balance</mat-icon>
+        <span>No accounts found</span>
+      </div>
+    } @else {
+      <div class="accounts-grid">
+        @for (account of accounts(); track account.id) {
+          <div class="account-card glass-card">
+            <div class="account-card-header">
+              <div class="account-type-icon">
+                <mat-icon>{{ getAccountIcon(account.accountType) }}</mat-icon>
+              </div>
+              <span class="status-badge" [class]="account.status.toLowerCase()">
+                {{ account.status }}
+              </span>
+            </div>
+            <div class="account-owner">{{ account.ownerName }}</div>
+            <div class="account-iban">{{ account.iban | ibanFormat }}</div>
+            <div class="account-balance">
+              {{ account.balance | currency:account.currency:'symbol':'1.2-2' }}
+            </div>
+            <div class="account-type-label">{{ account.accountType }}</div>
+          </div>
+        }
+      </div>
+    }
+  </section>
+
+  <!-- Recent transactions -->
+  <section class="section">
+    <div class="section-header">
+      <h2 class="section-title">Recent Transactions</h2>
+      <a routerLink="/transactions" class="section-link">View all</a>
+    </div>
+
+    @if (loadingTransactions()) {
+      <div class="loading-placeholder">
+        <mat-spinner diameter="32" />
+      </div>
+    } @else if (recentTransactions().length === 0) {
+      <div class="empty-section">
+        <mat-icon>receipt_long</mat-icon>
+        <span>No transactions yet</span>
+      </div>
+    } @else {
+      <div class="transactions-table-wrap glass-card">
+        <table mat-table [dataSource]="recentTransactions()" class="transactions-table">
+          <!-- Date column -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let txn">
+              {{ txn.createdAt | date:'MMM d, HH:mm' }}
+            </td>
+          </ng-container>
+
+          <!-- Description column -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let txn">
+              <div class="txn-desc">{{ txn.description || 'Transfer' }}</div>
+              <div class="txn-iban">{{ txn.targetIban | ibanFormat }}</div>
+            </td>
+          </ng-container>
+
+          <!-- Amount column -->
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let txn">
+              <span
+                class="txn-amount"
+                [class.incoming]="isIncoming(txn, accounts())"
+                [class.outgoing]="!isIncoming(txn, accounts())"
+              >
+                {{ isIncoming(txn, accounts()) ? '+' : '-' }}{{ txn.amount | currency:txn.currency:'symbol':'1.2-2' }}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Status column -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let txn">
+              <span class="status-badge" [class]="txn.status.toLowerCase()">{{ txn.status }}</span>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="transactionColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: transactionColumns;"></tr>
+        </table>
+      </div>
+    }
+  </section>
+</div>

@@ -1,0 +1,180 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/glassmorphism' as *;
+
+.account-list {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 28px;
+}
+
+.page-title {
+  font-size: $font-size-2xl;
+  font-weight: 700;
+  color: $text-primary;
+  margin: 0;
+}
+
+.create-fab {
+  background-color: $gold-primary !important;
+  color: #0A0F1E !important;
+
+  &:hover {
+    background-color: $gold-light !important;
+    box-shadow: 0 0 20px rgba(212, 160, 23, 0.4) !important;
+  }
+}
+
+.loading-center {
+  display: flex;
+  justify-content: center;
+  padding: 80px;
+}
+
+// Empty state
+.empty-state {
+  @include glass-card();
+  padding: 80px 40px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  max-width: 480px;
+  margin: 0 auto;
+
+  h3 {
+    font-size: $font-size-xl;
+    font-weight: 600;
+    color: $text-primary;
+    margin: 0;
+  }
+
+  p {
+    font-size: $font-size-sm;
+    color: $text-secondary;
+    margin: 0;
+  }
+}
+
+.empty-icon {
+  font-size: 64px;
+  width: 64px;
+  height: 64px;
+  color: $gold-primary;
+  opacity: 0.4;
+}
+
+.create-btn {
+  background-color: $gold-primary !important;
+  color: #0A0F1E !important;
+  margin-top: 8px;
+
+  &:hover { background-color: $gold-light !important; }
+}
+
+// Accounts grid
+.accounts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.account-card {
+  @include glass-card();
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  transition: all 250ms ease;
+  cursor: default;
+
+  &:hover {
+    border-color: rgba(212, 160, 23, 0.3);
+    box-shadow: 0 0 24px rgba(212, 160, 23, 0.2);
+    transform: translateY(-3px);
+  }
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.account-icon-wrap {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: rgba(212, 160, 23, 0.15);
+  border: 1px solid rgba(212, 160, 23, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon {
+    color: $gold-primary;
+    font-size: 22px;
+    width: 22px;
+    height: 22px;
+  }
+}
+
+.account-owner {
+  font-size: $font-size-base;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.account-type {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  font-weight: 500;
+}
+
+.account-iban {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.04em;
+  background: rgba(37, 43, 59, 0.5);
+  padding: 6px 10px;
+  border-radius: 6px;
+}
+
+.account-balance {
+  font-size: $font-size-2xl;
+  font-weight: 700;
+  color: $gold-primary;
+  margin-top: 4px;
+}
+
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.account-currency {
+  font-size: $font-size-xs;
+  font-weight: 600;
+  color: $text-secondary;
+  background: rgba(37, 43, 59, 0.6);
+  padding: 2px 8px;
+  border-radius: $radius-full;
+}
+
+.account-date {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+}

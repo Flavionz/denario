@@ -1,0 +1,133 @@
+<div class="transaction-list fade-in-up">
+  <h1 class="page-title">Transactions</h1>
+
+  <!-- Transfer Panel (collapsible) -->
+  <mat-accordion class="transfer-panel">
+    <mat-expansion-panel class="glass-panel">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <mat-icon class="panel-icon">send</mat-icon>
+          New Transfer
+        </mat-panel-title>
+        <mat-panel-description>
+          Send money to any IBAN
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <app-transfer-form [accounts]="accounts()" (transferred)="onTransferred()" />
+    </mat-expansion-panel>
+  </mat-accordion>
+
+  <!-- Transaction History -->
+  <section class="history-section">
+    <div class="section-header">
+      <h2 class="section-title">Transaction History</h2>
+
+      <!-- IBAN filter -->
+      <div class="filter-wrap">
+        <mat-form-field appearance="outline" class="filter-field">
+          <mat-label>Filter by IBAN</mat-label>
+          <mat-icon matPrefix>search</mat-icon>
+          <input
+            matInput
+            [ngModel]="ibanFilter()"
+            (ngModelChange)="ibanFilter.set($event)"
+            (keyup.enter)="applyFilter()"
+            placeholder="Enter IBAN..."
+          />
+          @if (ibanFilter()) {
+            <button matSuffix mat-icon-button (click)="clearFilter()">
+              <mat-icon>close</mat-icon>
+            </button>
+          }
+        </mat-form-field>
+        <button mat-raised-button class="filter-btn" (click)="applyFilter()">
+          <mat-icon>filter_list</mat-icon>
+          Filter
+        </button>
+      </div>
+    </div>
+
+    @if (loading()) {
+      <div class="loading-center">
+        <mat-spinner diameter="40" />
+      </div>
+    } @else if (transactions().length === 0) {
+      <div class="empty-state glass-card">
+        <mat-icon class="empty-icon">receipt_long</mat-icon>
+        <p>No transactions found</p>
+      </div>
+    } @else {
+      <div class="table-container glass-card">
+        <table mat-table [dataSource]="transactions()" class="transactions-table">
+          <!-- Date -->
+          <ng-container matColumnDef="date">
+            <th mat-header-cell *matHeaderCellDef>Date</th>
+            <td mat-cell *matCellDef="let txn">
+              {{ txn.createdAt | date:'MMM d, yyyy HH:mm' }}
+            </td>
+          </ng-container>
+
+          <!-- Description -->
+          <ng-container matColumnDef="description">
+            <th mat-header-cell *matHeaderCellDef>Description</th>
+            <td mat-cell *matCellDef="let txn">
+              <div class="txn-desc">{{ txn.description || 'Transfer' }}</div>
+            </td>
+          </ng-container>
+
+          <!-- Source IBAN -->
+          <ng-container matColumnDef="sourceIban">
+            <th mat-header-cell *matHeaderCellDef>From</th>
+            <td mat-cell *matCellDef="let txn">
+              <span class="iban-cell">{{ txn.sourceIban | ibanFormat }}</span>
+            </td>
+          </ng-container>
+
+          <!-- Target IBAN -->
+          <ng-container matColumnDef="targetIban">
+            <th mat-header-cell *matHeaderCellDef>To</th>
+            <td mat-cell *matCellDef="let txn">
+              <span class="iban-cell">{{ txn.targetIban | ibanFormat }}</span>
+            </td>
+          </ng-container>
+
+          <!-- Amount -->
+          <ng-container matColumnDef="amount">
+            <th mat-header-cell *matHeaderCellDef>Amount</th>
+            <td mat-cell *matCellDef="let txn">
+              <span
+                class="txn-amount"
+                [class.incoming]="isIncoming(txn)"
+                [class.outgoing]="!isIncoming(txn)"
+              >
+                {{ isIncoming(txn) ? '+' : '-' }}{{ txn.amount | currency:txn.currency:'symbol':'1.2-2' }}
+              </span>
+            </td>
+          </ng-container>
+
+          <!-- Status -->
+          <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef>Status</th>
+            <td mat-cell *matCellDef="let txn">
+              <span class="status-badge" [class]="txn.status.toLowerCase()">{{ txn.status }}</span>
+            </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+        </table>
+
+        <!-- Paginator -->
+        <mat-paginator
+          [length]="totalElements()"
+          [pageSize]="pageSize()"
+          [pageIndex]="currentPage()"
+          [pageSizeOptions]="[5, 10, 25, 50]"
+          (page)="onPageChange($event)"
+          class="table-paginator"
+        />
+      </div>
+    }
+  </section>
+</div>

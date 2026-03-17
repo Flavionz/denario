@@ -1,0 +1,269 @@
+@use '../../../styles/variables' as *;
+@use '../../../styles/glassmorphism' as *;
+
+.dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+// Hero card
+.hero-card {
+  position: relative;
+  padding: 40px 48px;
+  overflow: hidden;
+  min-height: 180px;
+  display: flex;
+  align-items: center;
+  @include glass-card();
+
+  &:hover {
+    box-shadow: 0 0 30px rgba(212, 160, 23, 0.15);
+    border-color: rgba(212, 160, 23, 0.2);
+  }
+}
+
+.hero-watermark {
+  position: absolute;
+  right: -20px;
+  bottom: -20px;
+  width: 200px;
+  height: 200px;
+  opacity: 0.05;
+  pointer-events: none;
+  user-select: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-label {
+  font-size: $font-size-sm;
+  font-weight: 500;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  margin-bottom: 8px;
+}
+
+.hero-balance {
+  font-size: $font-size-4xl;
+  font-weight: 700;
+  color: $gold-primary;
+  letter-spacing: -0.02em;
+  line-height: 1.1;
+  margin-bottom: 8px;
+}
+
+.hero-sub {
+  font-size: $font-size-sm;
+  color: $text-secondary;
+}
+
+// Stats row
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+
+  @media (max-width: 600px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.stat-card {
+  @include glass-card();
+  padding: 20px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  transition: all 250ms ease;
+
+  &:hover {
+    border-color: rgba(212, 160, 23, 0.25);
+    box-shadow: 0 0 16px rgba(212, 160, 23, 0.15);
+    transform: translateY(-2px);
+  }
+}
+
+.stat-icon {
+  font-size: 28px;
+  width: 28px;
+  height: 28px;
+  color: $gold-primary;
+  opacity: 0.85;
+}
+
+.stat-body {}
+
+.stat-value {
+  font-size: $font-size-2xl;
+  font-weight: 700;
+  color: $text-primary;
+  line-height: 1.2;
+}
+
+.stat-date {
+  font-size: $font-size-lg;
+}
+
+.stat-label {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-top: 2px;
+}
+
+// Sections
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.section-title {
+  font-size: $font-size-lg;
+  font-weight: 600;
+  color: $text-primary;
+  margin: 0;
+}
+
+.section-link {
+  font-size: $font-size-sm;
+  color: $gold-primary;
+  text-decoration: none;
+  font-weight: 500;
+
+  &:hover { color: $gold-light; text-decoration: underline; }
+}
+
+// Loading
+.loading-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+// Empty state
+.empty-section {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 32px;
+  color: $text-secondary;
+  @include glass-card();
+
+  mat-icon { font-size: 24px; opacity: 0.5; }
+  span { font-size: $font-size-sm; }
+}
+
+// Accounts grid
+.accounts-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 16px;
+}
+
+.account-card {
+  @include glass-card();
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  transition: all 250ms ease;
+  cursor: default;
+
+  &:hover {
+    border-color: rgba(212, 160, 23, 0.3);
+    box-shadow: 0 0 20px rgba(212, 160, 23, 0.2);
+    transform: translateY(-2px);
+  }
+}
+
+.account-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 4px;
+}
+
+.account-type-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: rgba(212, 160, 23, 0.15);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  mat-icon { color: $gold-primary; font-size: 20px; width: 20px; height: 20px; }
+}
+
+.account-owner {
+  font-size: $font-size-sm;
+  font-weight: 600;
+  color: $text-primary;
+}
+
+.account-iban {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.05em;
+}
+
+.account-balance {
+  font-size: $font-size-xl;
+  font-weight: 700;
+  color: $gold-primary;
+  margin-top: 4px;
+}
+
+.account-type-label {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+// Transactions table
+.transactions-table-wrap {
+  @include glass-card();
+  overflow: hidden;
+}
+
+.transactions-table {
+  width: 100%;
+}
+
+.txn-desc {
+  font-size: $font-size-sm;
+  font-weight: 500;
+  color: $text-primary;
+}
+
+.txn-iban {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  font-family: monospace;
+}
+
+.txn-amount {
+  font-weight: 600;
+  font-size: $font-size-sm;
+
+  &.incoming { color: $success; }
+  &.outgoing { color: $error; }
+}

@@ -1,0 +1,35 @@
+<mat-toolbar class="topbar">
+  <!-- Hamburger menu (mobile) -->
+  <button mat-icon-button class="menu-btn" (click)="onMenuToggle()" aria-label="Toggle menu">
+    <mat-icon>menu</mat-icon>
+  </button>
+
+  <!-- Page title -->
+  <h1 class="page-title">{{ pageTitle() }}</h1>
+
+  <span class="topbar-spacer"></span>
+
+  <!-- Notification bell -->
+  <button
+    mat-icon-button
+    class="notification-btn"
+    (click)="onNotificationClick()"
+    aria-label="Notifications"
+    [matTooltip]="'Notifications'"
+  >
+    @if (notificationService.unreadCount() > 0) {
+      <mat-icon
+        [matBadge]="notificationService.unreadCount()"
+        matBadgeColor="warn"
+        matBadgeSize="small"
+      >notifications</mat-icon>
+    } @else {
+      <mat-icon>notifications_none</mat-icon>
+    }
+  </button>
+
+  <!-- User avatar -->
+  <div class="topbar-avatar">
+    {{ authService.getInitials() }}
+  </div>
+</mat-toolbar>

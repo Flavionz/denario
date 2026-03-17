@@ -1,0 +1,58 @@
+<div class="account-list fade-in-up">
+  <div class="page-header">
+    <h1 class="page-title">Accounts</h1>
+    <button mat-fab class="create-fab" (click)="openCreateDialog()" matTooltip="Create new account">
+      <mat-icon>add</mat-icon>
+    </button>
+  </div>
+
+  @if (loading()) {
+    <div class="loading-center">
+      <mat-spinner diameter="48" />
+    </div>
+  } @else if (accounts().length === 0) {
+    <!-- Empty state -->
+    <div class="empty-state glass-card">
+      <mat-icon class="empty-icon">account_balance</mat-icon>
+      <h3>No accounts yet</h3>
+      <p>Create your first account to get started with Denario</p>
+      <button mat-raised-button class="create-btn" (click)="openCreateDialog()">
+        <mat-icon>add</mat-icon>
+        Create Account
+      </button>
+    </div>
+  } @else {
+    <!-- Account cards grid -->
+    <div class="accounts-grid">
+      @for (account of accounts(); track account.id) {
+        <div class="account-card glass-card">
+          <div class="card-header">
+            <div class="account-icon-wrap">
+              <mat-icon>{{ getAccountIcon(account.accountType) }}</mat-icon>
+            </div>
+            <span class="status-badge" [class]="account.status.toLowerCase()">
+              {{ account.status }}
+            </span>
+          </div>
+
+          <div class="account-owner">{{ account.ownerName }}</div>
+
+          <div class="account-type">
+            {{ account.accountType === 'CHECKING' ? 'Checking Account' : 'Savings Account' }}
+          </div>
+
+          <div class="account-iban">{{ account.iban | ibanFormat }}</div>
+
+          <div class="account-balance">
+            {{ account.balance | currency:account.currency:'symbol':'1.2-2' }}
+          </div>
+
+          <div class="card-footer">
+            <span class="account-currency">{{ account.currency }}</span>
+            <span class="account-date">Since {{ account.createdAt | date:'MMM yyyy' }}</span>
+          </div>
+        </div>
+      }
+    </div>
+  }
+</div>

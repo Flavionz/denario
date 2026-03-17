@@ -1,0 +1,44 @@
+// ============================================================
+// Glassmorphism Mixins
+// ============================================================
+
+@mixin glass-card($blur: 12px, $opacity: 0.7) {
+  background: rgba(26, 31, 46, $opacity);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 16px;
+}
+
+@mixin glass-card-hover() {
+  &:hover {
+    border-color: rgba(212, 160, 23, 0.3);
+    box-shadow: 0 0 20px rgba(212, 160, 23, 0.3);
+    transform: translateY(-2px);
+    transition: all 250ms ease;
+  }
+}
+
+@mixin gold-glow() {
+  box-shadow: 0 0 20px rgba(212, 160, 23, 0.3);
+}
+
+@mixin gold-glow-lg() {
+  box-shadow: 0 0 40px rgba(212, 160, 23, 0.4);
+}
+
+@mixin glass-elevated($blur: 16px) {
+  background: rgba(37, 43, 59, 0.85);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+}
+
+@mixin glass-dark($blur: 8px) {
+  background: rgba(13, 20, 33, 0.9);
+  backdrop-filter: blur($blur);
+  -webkit-backdrop-filter: blur($blur);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  border-radius: 12px;
+}

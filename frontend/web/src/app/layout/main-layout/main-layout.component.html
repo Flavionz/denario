@@ -1,0 +1,31 @@
+<mat-sidenav-container class="layout-container">
+  <!-- Sidenav (sidebar) -->
+  <mat-sidenav
+    #sidenav
+    [mode]="sidenavMode"
+    [opened]="sidenavOpened"
+    class="layout-sidenav"
+  >
+    <app-sidebar (mobileClose)="isMobile() && sidenav.close()" />
+  </mat-sidenav>
+
+  <!-- Main content -->
+  <mat-sidenav-content class="layout-content">
+    <!-- Top bar -->
+    <app-topbar
+      (menuToggle)="toggleMenu()"
+      (notificationClick)="toggleNotifications()"
+    />
+
+    <!-- Page content -->
+    <main class="main-content">
+      <router-outlet />
+    </main>
+
+    <!-- Notification overlay -->
+    @if (notificationPanelOpen()) {
+      <div class="notification-overlay" (click)="closeNotifications()"></div>
+      <app-notification-panel (close)="closeNotifications()" />
+    }
+  </mat-sidenav-content>
+</mat-sidenav-container>

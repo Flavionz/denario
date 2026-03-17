@@ -1,0 +1,66 @@
+<div class="notification-panel">
+  <!-- Header -->
+  <div class="panel-header">
+    <h2 class="panel-title">Notifications</h2>
+    <div class="header-actions">
+      @if (notificationService.unreadCount() > 0) {
+        <button mat-button class="mark-read-btn" (click)="markAllRead()">
+          Mark all read
+        </button>
+      }
+      <button mat-icon-button (click)="onClose()" aria-label="Close">
+        <mat-icon>close</mat-icon>
+      </button>
+    </div>
+  </div>
+
+  <mat-divider />
+
+  <!-- Panel body -->
+  <div class="panel-body">
+    <!-- Real-time notifications -->
+    @if (notificationService.realtimeNotifications().length > 0) {
+      <div class="section-label">New</div>
+      @for (notif of notificationService.realtimeNotifications(); track notif.timestamp) {
+        <div class="notification-item realtime pulse-gold">
+          <div class="notif-icon-wrap">
+            <mat-icon class="notif-icon realtime-icon">{{ getNotificationIcon(notif.type) }}</mat-icon>
+          </div>
+          <div class="notif-content">
+            <div class="notif-title">{{ notif.title }}</div>
+            <div class="notif-message">{{ notif.message }}</div>
+            <div class="notif-time">{{ notif.timestamp | relativeTime }}</div>
+          </div>
+        </div>
+      }
+      <mat-divider />
+    }
+
+    <!-- History notifications -->
+    @if (notificationService.notifications().length > 0) {
+      <div class="section-label">History</div>
+      @for (notif of notificationService.notifications(); track notif.id) {
+        <div class="notification-item" [class.unread]="!notif.read">
+          <div class="notif-icon-wrap">
+            <mat-icon class="notif-icon" [class.unread-icon]="!notif.read">
+              {{ getNotificationIcon(notif.type) }}
+            </mat-icon>
+          </div>
+          <div class="notif-content">
+            <div class="notif-title" [class.unread-title]="!notif.read">{{ notif.title }}</div>
+            <div class="notif-message">{{ notif.message }}</div>
+            <div class="notif-time">{{ notif.createdAt | relativeTime }}</div>
+          </div>
+          @if (!notif.read) {
+            <div class="unread-dot"></div>
+          }
+        </div>
+      }
+    } @else if (notificationService.realtimeNotifications().length === 0) {
+      <div class="empty-state">
+        <mat-icon class="empty-icon">notifications_none</mat-icon>
+        <p>No notifications yet</p>
+      </div>
+    }
+  </div>
+</div>

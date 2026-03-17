@@ -1,0 +1,53 @@
+<aside class="sidebar" [class.collapsed]="collapsed()">
+  <!-- Logo -->
+  <div class="sidebar-logo">
+    <img src="assets/images/denarius-coin.svg" alt="Denario Logo" class="logo-icon" />
+    @if (!collapsed()) {
+      <span class="logo-text">DENARIO</span>
+    }
+  </div>
+
+  <!-- Navigation -->
+  <nav class="sidebar-nav">
+    @for (item of navItems; track item.route) {
+      <a
+        class="nav-item"
+        [routerLink]="item.route"
+        routerLinkActive="active"
+        [matTooltip]="collapsed() ? item.label : ''"
+        matTooltipPosition="right"
+        (click)="onMobileClose()"
+      >
+        <mat-icon class="nav-icon">{{ item.icon }}</mat-icon>
+        @if (!collapsed()) {
+          <span class="nav-label">{{ item.label }}</span>
+        }
+      </a>
+    }
+  </nav>
+
+  <!-- Spacer -->
+  <div class="sidebar-spacer"></div>
+
+  <!-- User section -->
+  <div class="sidebar-user">
+    <div class="user-avatar">
+      {{ authService.getInitials() }}
+    </div>
+    @if (!collapsed()) {
+      <div class="user-info">
+        <span class="user-name">{{ authService.userProfile()?.name || 'User' }}</span>
+        <span class="user-email">{{ authService.userProfile()?.email || '' }}</span>
+      </div>
+    }
+    <button
+      mat-icon-button
+      class="logout-btn"
+      (click)="logout()"
+      [matTooltip]="'Logout'"
+      matTooltipPosition="right"
+    >
+      <mat-icon>logout</mat-icon>
+    </button>
+  </div>
+</aside>

@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="100" height="100">
+  <!-- Outer coin circle with gold fill -->
+  <circle cx="50" cy="50" r="48" fill="#C89010" stroke="#D4A017" stroke-width="2"/>
+  <!-- Inner coin background -->
+  <circle cx="50" cy="50" r="44" fill="#B8860B"/>
+  <!-- Laurel wreath - left side -->
+  <g fill="#D4A017" stroke="#F5B942" stroke-width="0.5">
+    <ellipse cx="14" cy="50" rx="4" ry="7" transform="rotate(-30 14 50)"/>
+    <ellipse cx="18" cy="38" rx="4" ry="7" transform="rotate(-15 18 38)"/>
+    <ellipse cx="25" cy="28" rx="4" ry="7" transform="rotate(0 25 28)"/>
+    <ellipse cx="35" cy="21" rx="4" ry="7" transform="rotate(15 35 21)"/>
+    <ellipse cx="46" cy="17" rx="4" ry="7" transform="rotate(30 46 17)"/>
+    <!-- Right side -->
+    <ellipse cx="86" cy="50" rx="4" ry="7" transform="rotate(30 86 50)"/>
+    <ellipse cx="82" cy="38" rx="4" ry="7" transform="rotate(15 82 38)"/>
+    <ellipse cx="75" cy="28" rx="4" ry="7" transform="rotate(0 75 28)"/>
+    <ellipse cx="65" cy="21" rx="4" ry="7" transform="rotate(-15 65 21)"/>
+    <ellipse cx="54" cy="17" rx="4" ry="7" transform="rotate(-30 54 17)"/>
+    <!-- Bottom wreath -->
+    <ellipse cx="14" cy="50" rx="4" ry="7" transform="rotate(30 14 50) translate(0 0)"/>
+    <ellipse cx="18" cy="62" rx="4" ry="7" transform="rotate(15 18 62)"/>
+    <ellipse cx="25" cy="72" rx="4" ry="7" transform="rotate(0 25 72)"/>
+    <ellipse cx="35" cy="79" rx="4" ry="7" transform="rotate(-15 35 79)"/>
+    <ellipse cx="46" cy="83" rx="4" ry="7" transform="rotate(-30 46 83)"/>
+    <ellipse cx="86" cy="50" rx="4" ry="7" transform="rotate(-30 86 50)"/>
+    <ellipse cx="82" cy="62" rx="4" ry="7" transform="rotate(-15 82 62)"/>
+    <ellipse cx="75" cy="72" rx="4" ry="7" transform="rotate(0 75 72)"/>
+    <ellipse cx="65" cy="79" rx="4" ry="7" transform="rotate(15 65 79)"/>
+    <ellipse cx="54" cy="83" rx="4" ry="7" transform="rotate(30 54 83)"/>
+  </g>
+  <!-- Inner circle border -->
+  <circle cx="50" cy="50" r="32" fill="none" stroke="#D4A017" stroke-width="1.5"/>
+  <!-- Profile silhouette (simple geometric head) -->
+  <g fill="#D4A017">
+    <!-- Head -->
+    <ellipse cx="50" cy="38" rx="11" ry="13"/>
+    <!-- Neck -->
+    <rect x="46" y="49" width="8" height="5"/>
+    <!-- Bust/shoulder -->
+    <ellipse cx="50" cy="58" rx="14" ry="8"/>
+  </g>
+  <!-- "D" monogram overlay -->
+  <text x="50" y="56" font-family="Georgia, serif" font-size="18" font-weight="bold" fill="#0A0F1E" text-anchor="middle" letter-spacing="1">D</text>
+  <!-- Stars at wreath binding points -->
+  <circle cx="50" cy="10" r="2" fill="#F5B942"/>
+  <circle cx="50" cy="90" r="2" fill="#F5B942"/>
+</svg>

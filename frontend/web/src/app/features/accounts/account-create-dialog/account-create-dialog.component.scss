@@ -1,0 +1,97 @@
+@use '../../../../styles/variables' as *;
+
+.dialog-container {
+  background-color: $surface-elevated;
+  border-radius: $radius-lg;
+  overflow: hidden;
+}
+
+.dialog-header {
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  padding: 24px 24px 16px !important;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+.dialog-title-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.dialog-icon {
+  color: $gold-primary;
+  font-size: 24px;
+}
+
+.dialog-title {
+  font-size: $font-size-xl;
+  font-weight: 600;
+  color: $text-primary;
+  margin: 0;
+}
+
+.close-btn {
+  color: $text-secondary !important;
+
+  &:hover { color: $text-primary !important; }
+}
+
+.dialog-body {
+  padding: 24px !important;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: 60vh;
+  overflow-y: auto;
+}
+
+.full-width {
+  width: 100%;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dialog-actions {
+  padding: 16px 24px !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.submit-btn {
+  background-color: $gold-primary !important;
+  color: #0A0F1E !important;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  &:disabled {
+    opacity: 0.6;
+  }
+
+  &:hover:not(:disabled) {
+    background-color: $gold-light !important;
+  }
+}
+
+// Form field overrides
+::ng-deep {
+  .mat-mdc-form-field-outline {
+    color: rgba(255, 255, 255, 0.15) !important;
+  }
+
+  .mat-mdc-form-field:hover .mat-mdc-form-field-outline {
+    color: rgba(212, 160, 23, 0.4) !important;
+  }
+
+  .mat-mdc-form-field.mat-focused .mat-mdc-form-field-outline {
+    color: $gold-primary !important;
+  }
+}

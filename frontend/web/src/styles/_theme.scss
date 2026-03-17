@@ -1,0 +1,117 @@
+// ============================================================
+// Angular Material Custom Dark Theme
+// ============================================================
+@use '@angular/material' as mat;
+
+// Define custom palettes
+$gold-palette: (
+  50:   #FFF8E7,
+  100:  #FDEFC4,
+  200:  #FBE49D,
+  300:  #F8D876,
+  400:  #F5CA58,
+  500:  #D4A017,
+  600:  #C89010,
+  700:  #B8790A,
+  800:  #9E6307,
+  900:  #7A4A03,
+  A100: #F5B942,
+  A200: #D4A017,
+  A400: #B8860B,
+  A700: #9A6E00,
+  contrast: (
+    50:   rgba(0, 0, 0, 0.87),
+    100:  rgba(0, 0, 0, 0.87),
+    200:  rgba(0, 0, 0, 0.87),
+    300:  rgba(0, 0, 0, 0.87),
+    400:  rgba(0, 0, 0, 0.87),
+    500:  rgba(0, 0, 0, 0.87),
+    600:  rgba(0, 0, 0, 0.87),
+    700:  #FFFFFF,
+    800:  #FFFFFF,
+    900:  #FFFFFF,
+    A100: rgba(0, 0, 0, 0.87),
+    A200: rgba(0, 0, 0, 0.87),
+    A400: rgba(0, 0, 0, 0.87),
+    A700: #FFFFFF,
+  )
+);
+
+// Include core Material styles
+@include mat.core();
+
+// Define the theme
+$denario-theme: mat.define-theme((
+  color: (
+    theme-type: dark,
+    primary: mat.$azure-palette,
+    tertiary: mat.$blue-palette,
+  ),
+  typography: (
+    brand-family: 'Inter, sans-serif',
+    plain-family: 'Inter, sans-serif',
+  ),
+  density: (
+    scale: 0,
+  ),
+));
+
+// Apply theme to all Material components
+html {
+  @include mat.all-component-themes($denario-theme);
+}
+
+// Override Material colors to match Denario palette
+.mat-toolbar {
+  background-color: #0A0F1E !important;
+  color: #F0F0F0 !important;
+}
+
+.mat-sidenav {
+  background-color: #0D1421 !important;
+}
+
+.mat-sidenav-content {
+  background-color: #0A0F1E !important;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  background-color: rgba(37, 43, 59, 0.8) !important;
+}
+
+.mat-mdc-form-field-focus-overlay {
+  background-color: rgba(212, 160, 23, 0.05) !important;
+}
+
+.mat-mdc-outlined-button:not(:disabled),
+.mat-mdc-button:not(:disabled) {
+  color: #D4A017;
+}
+
+.mat-mdc-raised-button.mat-primary,
+.mat-mdc-fab.mat-primary,
+.mat-mdc-mini-fab.mat-primary {
+  background-color: #D4A017 !important;
+  color: #0A0F1E !important;
+}
+
+.mat-mdc-progress-spinner circle {
+  stroke: #D4A017 !important;
+}
+
+.mdc-linear-progress__bar-inner {
+  border-color: #D4A017 !important;
+}
+
+.mat-mdc-slide-toggle.mat-primary {
+  --mdc-switch-selected-handle-color: #D4A017;
+  --mdc-switch-selected-track-color: rgba(212, 160, 23, 0.5);
+}
+
+.mat-mdc-checkbox.mat-primary {
+  --mdc-checkbox-selected-checkmark-color: #0A0F1E;
+  --mdc-checkbox-selected-focus-icon-color: #D4A017;
+  --mdc-checkbox-selected-hover-icon-color: #D4A017;
+  --mdc-checkbox-selected-icon-color: #D4A017;
+  --mdc-checkbox-selected-pressed-icon-color: #D4A017;
+}

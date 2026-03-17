@@ -1,0 +1,96 @@
+<form [formGroup]="form" (ngSubmit)="submit()" class="transfer-form">
+  <div class="form-row">
+    <!-- Source IBAN -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>From Account</mat-label>
+      <mat-icon matPrefix>account_balance_wallet</mat-icon>
+      <mat-select formControlName="sourceIban">
+        @for (account of accounts(); track account.id) {
+          <mat-option [value]="account.iban">
+            {{ account.iban | ibanFormat }} — {{ account.currency }} {{ account.balance | number:'1.2-2' }}
+          </mat-option>
+        }
+      </mat-select>
+      @if (form.get('sourceIban')?.hasError('required') && form.get('sourceIban')?.touched) {
+        <mat-error>Please select a source account</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Target IBAN -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>To IBAN</mat-label>
+      <mat-icon matPrefix>send</mat-icon>
+      <input
+        matInput
+        formControlName="targetIban"
+        placeholder="e.g. IT60 X054 2811 1010 0000 0123 456"
+        autocomplete="off"
+      />
+      @if (form.get('targetIban')?.hasError('required') && form.get('targetIban')?.touched) {
+        <mat-error>Target IBAN is required</mat-error>
+      }
+      @if (form.get('targetIban')?.hasError('sameIban')) {
+        <mat-error>Source and target IBAN cannot be the same</mat-error>
+      }
+    </mat-form-field>
+  </div>
+
+  <div class="form-row">
+    <!-- Amount -->
+    <mat-form-field appearance="outline" class="form-field">
+      <mat-label>Amount</mat-label>
+      <mat-icon matPrefix>payments</mat-icon>
+      <input matInput type="number" formControlName="amount" min="0.01" step="0.01" placeholder="0.00" />
+      @if (form.get('amount')?.hasError('required') && form.get('amount')?.touched) {
+        <mat-error>Amount is required</mat-error>
+      }
+      @if (form.get('amount')?.hasError('min')) {
+        <mat-error>Minimum amount is 0.01</mat-error>
+      }
+    </mat-form-field>
+
+    <!-- Currency -->
+    <mat-form-field appearance="outline" class="form-field currency-field">
+      <mat-label>Currency</mat-label>
+      <mat-icon matPrefix>euro</mat-icon>
+      <mat-select formControlName="currency">
+        @for (currency of currencies; track currency) {
+          <mat-option [value]="currency">{{ currency }}</mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+  </div>
+
+  <!-- Description -->
+  <mat-form-field appearance="outline" class="form-field full-width">
+    <mat-label>Description (optional)</mat-label>
+    <mat-icon matPrefix>notes</mat-icon>
+    <input matInput formControlName="description" placeholder="e.g. Rent payment" maxlength="200" />
+  </mat-form-field>
+
+  <!-- Actions -->
+  <div class="form-actions">
+    <button mat-button type="button" (click)="reset()" [disabled]="loading()">
+      <mat-icon>clear</mat-icon>
+      Clear
+    </button>
+    <button
+      mat-raised-button
+      type="submit"
+      class="submit-btn"
+      [disabled]="form.invalid || loading()"
+    >
+      @if (loading()) {
+        <ng-container>
+          <mat-spinner diameter="20" />
+          Processing...
+        </ng-container>
+      } @else {
+        <ng-container>
+          <mat-icon>send</mat-icon>
+          Transfer
+        </ng-container>
+      }
+    </button>
+  </div>
+</form>

@@ -1,0 +1,180 @@
+@use '../../../../styles/variables' as *;
+@use '../../../../styles/glassmorphism' as *;
+
+.transaction-list {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.page-title {
+  font-size: $font-size-2xl;
+  font-weight: 700;
+  color: $text-primary;
+  margin: 0;
+}
+
+// Transfer panel
+.transfer-panel {
+  background: transparent !important;
+}
+
+.glass-panel {
+  @include glass-card();
+  margin-bottom: 0 !important;
+
+  ::ng-deep {
+    .mat-expansion-panel-body {
+      padding: 0 16px 16px;
+      background: transparent;
+    }
+
+    .mat-expansion-panel-header {
+      background: transparent !important;
+      height: 56px;
+
+      &:hover { background: rgba(212, 160, 23, 0.05) !important; }
+    }
+
+    .mat-expansion-panel-header-title {
+      color: $text-primary;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .mat-expansion-panel-header-description {
+      color: $text-secondary;
+      font-size: $font-size-sm;
+    }
+
+    .mat-expansion-indicator::after {
+      color: $gold-primary;
+    }
+  }
+}
+
+.panel-icon {
+  color: $gold-primary;
+  font-size: 20px;
+  width: 20px;
+  height: 20px;
+}
+
+// History section
+.history-section {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
+.section-title {
+  font-size: $font-size-lg;
+  font-weight: 600;
+  color: $text-primary;
+  margin: 0;
+}
+
+.filter-wrap {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.filter-field {
+  min-width: 280px;
+
+  @media (max-width: 600px) {
+    min-width: 200px;
+  }
+}
+
+.filter-btn {
+  background-color: rgba(37, 43, 59, 0.8) !important;
+  color: $text-primary !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  height: 56px;
+  margin-top: 0;
+
+  &:hover {
+    border-color: rgba(212, 160, 23, 0.4) !important;
+    color: $gold-primary !important;
+  }
+}
+
+.loading-center {
+  display: flex;
+  justify-content: center;
+  padding: 60px;
+}
+
+.empty-state {
+  @include glass-card();
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 60px;
+  text-align: center;
+
+  p { color: $text-secondary; font-size: $font-size-sm; }
+}
+
+.empty-icon {
+  font-size: 48px;
+  width: 48px;
+  height: 48px;
+  color: $gold-primary;
+  opacity: 0.3;
+}
+
+// Table
+.table-container {
+  @include glass-card();
+  overflow: hidden;
+}
+
+.transactions-table {
+  width: 100%;
+}
+
+.txn-desc {
+  font-size: $font-size-sm;
+  font-weight: 500;
+  color: $text-primary;
+  max-width: 200px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.iban-cell {
+  font-size: $font-size-xs;
+  color: $text-secondary;
+  font-family: 'Courier New', monospace;
+}
+
+.txn-amount {
+  font-weight: 600;
+  font-size: $font-size-sm;
+
+  &.incoming { color: $success; }
+  &.outgoing { color: $error; }
+}
+
+.table-paginator {
+  background: transparent !important;
+  color: $text-secondary !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+}

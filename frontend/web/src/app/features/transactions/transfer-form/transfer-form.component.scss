@@ -1,0 +1,55 @@
+@use '../../../../styles/variables' as *;
+
+.transfer-form {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 0;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+
+  @media (max-width: 640px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.form-field {
+  width: 100%;
+}
+
+.currency-field {
+  max-width: 160px;
+
+  @media (max-width: 640px) {
+    max-width: 100%;
+  }
+}
+
+.full-width {
+  width: 100%;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.submit-btn {
+  background-color: $gold-primary !important;
+  color: #0A0F1E !important;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0 24px;
+  height: 44px;
+
+  &:disabled { opacity: 0.6; }
+  &:hover:not(:disabled) { background-color: $gold-light !important; }
+}

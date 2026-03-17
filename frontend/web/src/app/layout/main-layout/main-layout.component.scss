@@ -1,0 +1,66 @@
+@use '../../../styles/variables' as *;
+
+.layout-container {
+  height: 100vh;
+  width: 100vw;
+  background-color: $bg-primary;
+}
+
+.layout-sidenav {
+  width: $sidebar-width;
+  background-color: $bg-secondary !important;
+  border-right: none !important;
+}
+
+.layout-content {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  background-color: $bg-primary;
+}
+
+.main-content {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px;
+  position: relative;
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: $bg-primary;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: rgba(212, 160, 23, 0.2);
+    border-radius: 3px;
+
+    &:hover {
+      background: rgba(212, 160, 23, 0.4);
+    }
+  }
+}
+
+.notification-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 200;
+}
+
+// Sidenav container overrides
+::ng-deep {
+  .mat-drawer-container {
+    background-color: $bg-primary !important;
+  }
+
+  .mat-drawer {
+    background-color: $bg-secondary !important;
+    border-right: 1px solid rgba(255, 255, 255, 0.06) !important;
+    box-shadow: none !important;
+  }
+}

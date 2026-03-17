@@ -1,0 +1,103 @@
+// ============================================================
+// Denario Design System – SCSS Variables & CSS Custom Properties
+// ============================================================
+
+// --- Color Palette ---
+$bg-primary:       #0A0F1E;
+$bg-secondary:     #0D1421;
+$surface:          #1A1F2E;
+$surface-elevated: #252B3B;
+
+$gold-primary: #D4A017;
+$gold-light:   #F5B942;
+$gold-dark:    #B8860B;
+
+$text-primary:   #F0F0F0;
+$text-secondary: #9CA3AF;
+
+$success: #10B981;
+$error:   #EF4444;
+$warning: #F59E0B;
+$info:    #3B82F6;
+
+// --- Typography ---
+$font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+$font-size-xs:   0.75rem;  // 12px
+$font-size-sm:   0.875rem; // 14px
+$font-size-base: 1rem;     // 16px
+$font-size-lg:   1.125rem; // 18px
+$font-size-xl:   1.25rem;  // 20px
+$font-size-2xl:  1.5rem;   // 24px
+$font-size-3xl:  1.875rem; // 30px
+$font-size-4xl:  2.25rem;  // 36px
+
+// --- Spacing ---
+$spacing-1: 0.25rem;
+$spacing-2: 0.5rem;
+$spacing-3: 0.75rem;
+$spacing-4: 1rem;
+$spacing-5: 1.25rem;
+$spacing-6: 1.5rem;
+$spacing-8: 2rem;
+$spacing-10: 2.5rem;
+$spacing-12: 3rem;
+
+// --- Border Radius ---
+$radius-sm:  8px;
+$radius-md:  12px;
+$radius-lg:  16px;
+$radius-xl:  20px;
+$radius-full: 9999px;
+
+// --- Shadows ---
+$shadow-sm:  0 1px 3px rgba(0,0,0,0.4);
+$shadow-md:  0 4px 12px rgba(0,0,0,0.5);
+$shadow-lg:  0 8px 24px rgba(0,0,0,0.6);
+$shadow-gold: 0 0 20px rgba(212, 160, 23, 0.3);
+$shadow-gold-lg: 0 0 40px rgba(212, 160, 23, 0.4);
+
+// --- Glassmorphism ---
+$glass-bg:     rgba(26, 31, 46, 0.7);
+$glass-border: rgba(255, 255, 255, 0.06);
+$glass-blur:   12px;
+
+// --- Layout ---
+$sidebar-width: 260px;
+$topbar-height: 64px;
+
+// --- Transitions ---
+$transition-fast:   150ms ease;
+$transition-normal: 250ms ease;
+$transition-slow:   400ms ease;
+
+// --- CSS Custom Properties (used in global scope) ---
+:root {
+  --bg-primary:       #{$bg-primary};
+  --bg-secondary:     #{$bg-secondary};
+  --surface:          #{$surface};
+  --surface-elevated: #{$surface-elevated};
+
+  --gold-primary: #{$gold-primary};
+  --gold-light:   #{$gold-light};
+  --gold-dark:    #{$gold-dark};
+
+  --text-primary:   #{$text-primary};
+  --text-secondary: #{$text-secondary};
+
+  --success: #{$success};
+  --error:   #{$error};
+  --warning: #{$warning};
+  --info:    #{$info};
+
+  --shadow-gold:    #{$shadow-gold};
+  --shadow-gold-lg: #{$shadow-gold-lg};
+
+  --sidebar-width: #{$sidebar-width};
+  --topbar-height: #{$topbar-height};
+
+  --radius-sm:   #{$radius-sm};
+  --radius-md:   #{$radius-md};
+  --radius-lg:   #{$radius-lg};
+  --radius-xl:   #{$radius-xl};
+  --radius-full: #{$radius-full};
+}

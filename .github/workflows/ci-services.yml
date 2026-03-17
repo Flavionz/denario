@@ -1,10 +1,15 @@
-name: Denario CI/CD Pipeline
+name: CI — Backend Services
 
 on:
   push:
     branches: [ main, develop ]
+    paths:
+      - 'services/**'
+      - '.github/workflows/ci-services.yml'
   pull_request:
     branches: [ main ]
+    paths:
+      - 'services/**'
 
 jobs:
 
@@ -40,40 +45,39 @@ jobs:
 
       - name: Make mvnw executable
         run: |
-          chmod +x account-service/mvnw
-          chmod +x transaction-service/mvnw
-          chmod +x notification-service/mvnw
-          chmod +x api-gateway/mvnw
+          chmod +x services/account-service/mvnw
+          chmod +x services/transaction-service/mvnw
+          chmod +x services/notification-service/mvnw
+          chmod +x services/api-gateway/mvnw
 
       - name: Test Account Service
         run: |
-          cd account-service
+          cd services/account-service
           ./mvnw test -Dspring.profiles.active=test
 
       - name: Test Transaction Service
         run: |
-          cd transaction-service
+          cd services/transaction-service
           ./mvnw test -Dspring.profiles.active=test
 
       - name: Test Notification Service
         run: |
-          cd notification-service
+          cd services/notification-service
           ./mvnw test -Dspring.profiles.active=test
 
       - name: Build all services
         run: |
-          cd account-service && ./mvnw package -DskipTests
-          cd ../transaction-service && ./mvnw package -DskipTests
-          cd ../notification-service && ./mvnw package -DskipTests
-          cd ../api-gateway && ./mvnw package -DskipTests
+          cd services/account-service && ./mvnw package -DskipTests
+          cd ../../services/transaction-service && ./mvnw package -DskipTests
+          cd ../../services/notification-service && ./mvnw package -DskipTests
+          cd ../../services/api-gateway && ./mvnw package -DskipTests
 
       - name: Upload test reports
         uses: actions/upload-artifact@v4
         if: always()
         with:
-          name: test-reports
-          path: |
-            */target/surefire-reports/
+          name: test-reports-services
+          path: services/*/target/surefire-reports/
           retention-days: 7
 
   code-quality:
@@ -95,14 +99,14 @@ jobs:
 
       - name: Make mvnw executable
         run: |
-          chmod +x account-service/mvnw
-          chmod +x transaction-service/mvnw
-          chmod +x notification-service/mvnw
-          chmod +x api-gateway/mvnw
+          chmod +x services/account-service/mvnw
+          chmod +x services/transaction-service/mvnw
+          chmod +x services/notification-service/mvnw
+          chmod +x services/api-gateway/mvnw
 
       - name: Verify all modules compile
         run: |
           for service in account-service transaction-service notification-service api-gateway; do
             echo "Verifying $service..."
-            cd $service && ./mvnw verify -DskipTests && cd ..
+            cd services/$service && ./mvnw verify -DskipTests && cd ../..
           done

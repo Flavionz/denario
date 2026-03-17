@@ -11,7 +11,7 @@ services:
       - "5435:5432"
     volumes:
       - postgres_account_data:/var/lib/postgresql/data
-      - ./infrastructure/postgres/account-init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ../postgres/account-init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - denario-network
     healthcheck:
@@ -31,7 +31,7 @@ services:
       - "5436:5432"
     volumes:
       - postgres_transaction_data:/var/lib/postgresql/data
-      - ./infrastructure/postgres/transaction-init.sql:/docker-entrypoint-initdb.d/init.sql
+      - ../postgres/transaction-init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - denario-network
     healthcheck:
@@ -73,7 +73,7 @@ services:
     ports:
       - "8180:8080"
     volumes:
-      - ./infrastructure/keycloak/denario-realm.json:/opt/keycloak/data/import/denario-realm.json
+      - ../keycloak/denario-realm.json:/opt/keycloak/data/import/denario-realm.json
     depends_on:
       postgres-keycloak:
         condition: service_healthy

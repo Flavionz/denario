@@ -1,0 +1,15 @@
+# CODEOWNERS — default reviewer assignments
+# https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/about-code-owners
+
+# Global fallback
+* @Flavionz
+
+# Backend services
+/services/          @Flavionz
+/infrastructure/    @Flavionz
+
+# Frontend
+/frontend/          @Flavionz
+
+# CI/CD
+/.github/           @Flavionz

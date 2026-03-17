@@ -28,6 +28,9 @@ Thumbs.db
 # Docker volumes (local dev)
 postgres_data/
 
+# Claude Code (local AI config — keep private)
+.claude/
+
 # Secrets — NEVER commit these!
 *.env
 .env.local
